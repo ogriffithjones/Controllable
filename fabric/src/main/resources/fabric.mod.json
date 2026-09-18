@@ -34,7 +34,7 @@
         "fabric-api": "*",
         "minecraft": "${fabric_minecraft_version_range}",
         "java": ">=${java_version}",
-        "framework": ">=${framework_version}"
+        "framework": "=${framework_version}"
     },
     "breaks": {
         "jei": "<${jei_version}",

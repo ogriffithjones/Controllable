@@ -1,0 +1,45 @@
+diff --git a/build.gradle b/build.gradle
+index e3555ff..89f4cbe 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -6,6 +6,6 @@ buildscript {
+ 
+ plugins {
+     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.7'
+-    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT' apply false
++    id 'net.fabricmc.fabric-loom' version '1.16.3' apply false
+     id 'net.neoforged.moddev' version '2.0.147' apply false
+ }
+diff --git a/buildSrc/src/main/groovy/multiloader-common.gradle b/buildSrc/src/main/groovy/multiloader-common.gradle
+index 991fea0..d4f33a6 100644
+--- a/buildSrc/src/main/groovy/multiloader-common.gradle
++++ b/buildSrc/src/main/groovy/multiloader-common.gradle
+@@ -160,6 +160,6 @@ signing {
+         def signingKey = System.getenv("SIGNING_KEY")
+         def signingPassword = System.getenv("SIGNING_PASSPHRASE")
+         useInMemoryPgpKeys(signingKey, signingPassword)
++        sign publishing.publications.mavenJava
+     }
+-    sign publishing.publications.mavenJava
+ }
+\ No newline at end of file
+diff --git a/fabric/src/main/java/com/mrcrayfish/framework/mixin/client/GameRendererMixin.java b/fabric/src/main/java/com/mrcrayfish/framework/mixin/client/GameRendererMixin.java
+index e9b7859..7bcc4a1 100644
+--- a/fabric/src/main/java/com/mrcrayfish/framework/mixin/client/GameRendererMixin.java
++++ b/fabric/src/main/java/com/mrcrayfish/framework/mixin/client/GameRendererMixin.java
+@@ -14,13 +14,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+ @Mixin(GameRenderer.class)
+ public class GameRendererMixin
+ {
+-    @Inject(method = "render", at = @At(value = "HEAD"))
++    @Inject(method = "extract", at = @At(value = "HEAD"))
+     private void frameworkOnPreRender(DeltaTracker timer, boolean bl, CallbackInfo ci)
+     {
+         FrameworkClientTickEvents.START_RENDER.post().handle(timer);
+     }
+ 
+-    @Inject(method = "render", at = @At(value = "TAIL"))
++    @Inject(method = "extract", at = @At(value = "TAIL"))
+     private void frameworkOnPostRender(DeltaTracker timer, boolean bl, CallbackInfo ci)
+     {
+         FrameworkClientTickEvents.END_RENDER.post().handle(timer);

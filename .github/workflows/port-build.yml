@@ -1,0 +1,33 @@
+name: Build 26.3 port
+on:
+  push:
+    branches: ['port/26.3']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fabric:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_LOADER: fabric
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: sh scripts/build-fabric.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: controllable-fabric-26.3
+          path: build/26.3-mods/*.jar
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: patched-framework-source
+          path: build/26.3-sources/*.tar.gz
+          if-no-files-found: error

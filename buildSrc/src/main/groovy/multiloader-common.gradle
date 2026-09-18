@@ -30,6 +30,30 @@ def getPackagesRepo() {
 
 repositories {
     mavenCentral()
+    // Built from pinned, patched Framework sources by scripts/build-fabric.sh.
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'PatchedFramework'
+                url = rootProject.layout.projectDirectory.dir('.gradle/framework-maven')
+            }
+        }
+        filter {
+            includeModule('com.mrcrayfish', 'framework-common')
+            includeModule('com.mrcrayfish', 'framework-fabric')
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            ivy {
+                name = 'ControllableSDLReleases'
+                url = uri('https://github.com/MrCrayfish/ControllableSDL/releases/download')
+                patternLayout { artifact 'v[revision]/[module]-[revision].[ext]' }
+                metadataSources { artifact() }
+            }
+        }
+        filter { includeModule('com.mrcrayfish', 'controllable-sdl') }
+    }
     exclusiveContent {
         forRepository {
             maven {
