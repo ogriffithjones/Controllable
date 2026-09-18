@@ -1,5 +1,6 @@
 package com.mrcrayfish.controllable.client.gui.components;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.google.common.collect.ImmutableList;
 import com.mrcrayfish.controllable.client.gui.navigation.Navigatable;
 import com.mrcrayfish.controllable.client.gui.navigation.SkipItem;
@@ -21,7 +22,6 @@ import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Collections;
 import java.util.List;
@@ -137,7 +137,7 @@ public class TabSelectionList<E extends ContainerObjectSelectionList.Entry<E>> e
     @Override
     protected boolean isValidClickButton(MouseButtonInfo info)
     {
-        return super.isValidClickButton(info) || info.button() == GLFW.GLFW_MOUSE_BUTTON_RIGHT;
+        return super.isValidClickButton(info) || info.button() == InputConstants.MOUSE_BUTTON_RIGHT;
     }
 
     public abstract static class Item<T extends ContainerObjectSelectionList.Entry<T>> extends ContainerObjectSelectionList.Entry<T>

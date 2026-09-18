@@ -1,11 +1,11 @@
 package com.mrcrayfish.controllable.client.binding;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mrcrayfish.controllable.client.binding.handlers.EmptyHandler;
 import com.mrcrayfish.controllable.platform.ClientServices;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * A special binding that translates button presses to key presses. This binding does not need to be
@@ -46,12 +46,12 @@ public final class KeyAdapterBinding extends ButtonBinding
         {
             this.updateKeyBindPressTime();
             int key = ClientServices.CLIENT.getKeyValue(this.keyMapping);
-            this.handlePressed(GLFW.GLFW_PRESS, key, 0);
+            this.handlePressed(InputConstants.PRESS, key, 0);
         }
         else if(wasPressed && !pressed)
         {
             int key = ClientServices.CLIENT.getKeyValue(this.keyMapping);
-            this.handlePressed(GLFW.GLFW_RELEASE, key, 0);
+            this.handlePressed(InputConstants.RELEASE, key, 0);
         }
     }
 

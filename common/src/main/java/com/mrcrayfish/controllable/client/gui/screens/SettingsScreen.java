@@ -1,5 +1,6 @@
 package com.mrcrayfish.controllable.client.gui.screens;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mrcrayfish.controllable.Config;
 import com.mrcrayfish.controllable.Controllable;
 import com.mrcrayfish.controllable.client.binding.BindingRegistry;
@@ -30,7 +31,6 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +166,7 @@ public class SettingsScreen extends Screen
     {
         if(this.selectedBinding != null)
         {
-            if(event.key() == GLFW.GLFW_KEY_ESCAPE)
+            if(event.key() == InputConstants.KEY_ESCAPE)
             {
                 this.selectedBinding = null;
             }

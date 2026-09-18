@@ -1,5 +1,6 @@
 package com.mrcrayfish.controllable.platform;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mrcrayfish.controllable.Controllable;
 import com.mrcrayfish.controllable.client.binding.context.BindingContext;
 import com.mrcrayfish.controllable.client.binding.context.GlobalContext;
@@ -36,7 +37,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,8 @@ public class FabricClientHelper implements IClientHelper
     @Override
     public boolean sendScreenInput(Screen screen, int key, int action, int modifiers)
     {
-        KeyEvent event = new KeyEvent(key, GLFW.glfwGetKeyScancode(key), modifiers);
-        if(action == GLFW.GLFW_RELEASE)
+        KeyEvent event = new KeyEvent(key, SDLKeyboard.SDL_GetKeyFromScancode(key, (short) modifiers, false), modifiers);
+        if(action == InputConstants.RELEASE)
         {
             if(!ScreenKeyboardEvents.allowKeyRelease(screen).invoker().allowKeyRelease(screen, event))
                 return true;
@@ -56,7 +57,7 @@ public class FabricClientHelper implements IClientHelper
             ScreenKeyboardEvents.beforeKeyRelease(screen).invoker().beforeKeyRelease(screen, event);
             if(Controllable.isArchitecturyLoaded())
             {
-                if(ArchitecturySupport.sendScreenKeyReleased(screen, key, event.scancode(), modifiers))
+                if(ArchitecturySupport.sendScreenKeyReleased(screen, key, event.keycode(), modifiers))
                 {
                     handled = true;
                 }
@@ -68,7 +69,7 @@ public class FabricClientHelper implements IClientHelper
             ScreenKeyboardEvents.afterKeyRelease(screen).invoker().afterKeyRelease(screen, event);
             return handled;
         }
-        else if(action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT)
+        else if(action == InputConstants.PRESS || action == InputConstants.REPEAT)
         {
             screen.afterKeyboardAction();
 
@@ -79,7 +80,7 @@ public class FabricClientHelper implements IClientHelper
             ScreenKeyboardEvents.beforeKeyPress(screen).invoker().beforeKeyPress(screen, event);
             if(Controllable.isArchitecturyLoaded())
             {
-                if(ArchitecturySupport.sendScreenKeyPressed(screen, key, event.scancode(), modifiers))
+                if(ArchitecturySupport.sendScreenKeyPressed(screen, key, event.keycode(), modifiers))
                 {
                     handled = true;
                 }

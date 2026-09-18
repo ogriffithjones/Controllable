@@ -35,7 +35,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeyboard;
 
 import java.util.Optional;
 
@@ -82,7 +82,7 @@ public class ButtonBindings
     public static final ButtonBinding CLOSE_INVENTORY = new ButtonBinding(Buttons.Y, "controllable.key.close_inventory", "key.category.minecraft.inventory", InScreenContext.INSTANCE, OnPressHandler.create(context -> {
         return Optional.of(() -> {
             context.screen().ifPresent(screen -> {
-                screen.keyPressed(new KeyEvent(GLFW.GLFW_KEY_ESCAPE, GLFW.glfwGetKeyScancode(GLFW.GLFW_KEY_ESCAPE), 0));
+                screen.keyPressed(new KeyEvent(InputConstants.KEY_ESCAPE, SDLKeyboard.SDL_GetKeyFromScancode(InputConstants.KEY_ESCAPE, (short) 0, false), 0));
             });
         });
     }));
@@ -310,7 +310,7 @@ public class ButtonBindings
         });
     }, context -> {
         return context.screen().map(screen -> {
-            MouseHooks.sendMouseReleasedEvent(screen, GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+            MouseHooks.sendMouseReleasedEvent(screen, InputConstants.MOUSE_BUTTON_RIGHT);
             return true;
         }).orElse(false);
     }));
@@ -350,8 +350,7 @@ public class ButtonBindings
     public static final ButtonBinding FULLSCREEN = new ButtonBinding(-1, "key.fullscreen", "key.category.minecraft.misc", GlobalContext.INSTANCE, OnPressHandler.create(context -> {
         return Optional.of(() -> {
             Minecraft mc = context.minecraft();
-            mc.getWindow().toggleFullScreen();
-            mc.options.fullscreen().set(mc.getWindow().isFullscreen());
+            mc.options.fullscreen().set(!mc.options.fullscreen().get());
             mc.options.save();
         });
     }));

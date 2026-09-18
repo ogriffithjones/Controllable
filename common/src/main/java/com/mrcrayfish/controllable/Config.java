@@ -26,8 +26,8 @@ public class Config
         public final Options options = new Options();
 
         @ConfigProperty(name = "inputLibrary", gameRestart = true, comment = """
-            The library to use for game controller input. You can change this if you are having problems detecting game controllers.
-            Please note that changing from the default library may disable some feature in Controllable, only use this as a last resort""")
+            SDL2 is the supported controller input library on Minecraft 26.3.
+            Legacy GLFW settings are accepted for compatibility and use SDL2.""")
         public final EnumProperty<InputLibrary> inputLibrary = EnumProperty.create(InputLibrary.SDL2);
 
         public static class Options

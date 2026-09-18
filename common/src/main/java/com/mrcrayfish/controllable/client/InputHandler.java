@@ -49,7 +49,6 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2d;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -335,7 +334,7 @@ public class InputHandler
             // Since no reference to craft book button, instead search for it and invoke press.
             ClientServices.CLIENT.getScreenRenderables(screen).stream().filter(widget -> {
                 return widget instanceof ImageButton btn && RecipeBookComponent.RECIPE_BUTTON_SPRITES.equals(ClientServices.CLIENT.getImageButtonResource(btn));
-            }).findFirst().ifPresent(btn -> ((Button) btn).onPress(new MouseButtonInfo(0, 0)));
+            }).findFirst().ifPresent(btn -> ((Button) btn).onPress(new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0)));
             boolean visible = optional.get().isVisible();
             Minecraft.getInstance()
                 .getSoundManager()
@@ -773,7 +772,7 @@ public class InputHandler
                 if(menu.getCarried().isEmpty()) {
                     MouseHooks.sendMouseClickEvent(screen, InputConstants.MOUSE_BUTTON_LEFT, screenLeft + slot.x + 8, screenTop + slot.y + 8);
                 } else {
-                    MouseHooks.sendMouseReleasedEvent(screen, GLFW.GLFW_MOUSE_BUTTON_LEFT, screenLeft + slot.x + 8, screenTop + slot.y + 8);
+                    MouseHooks.sendMouseReleasedEvent(screen, InputConstants.MOUSE_BUTTON_LEFT, screenLeft + slot.x + 8, screenTop + slot.y + 8);
                 }
             });
         }

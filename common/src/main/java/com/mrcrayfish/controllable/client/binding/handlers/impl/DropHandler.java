@@ -31,7 +31,7 @@ public final class DropHandler extends TickingHandler implements BindingReleased
                 this.dropped = true;
                 context.player().ifPresent(player -> {
                     if(!player.isSpectator()) {
-                        player.drop(true);
+                        context.minecraft().gameMode.dropItem(player, true);
                     }
                 });
             }
@@ -58,7 +58,7 @@ public final class DropHandler extends TickingHandler implements BindingReleased
             {
                 this.dropped = true;
                 context.player().ifPresent(player -> {
-                    player.drop(false);
+                    context.minecraft().gameMode.dropItem(player, false);
                 });
                 context.controller().updateInputTime();
                 return true;
