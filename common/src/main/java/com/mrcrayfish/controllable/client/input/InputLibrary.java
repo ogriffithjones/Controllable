@@ -5,6 +5,6 @@ package com.mrcrayfish.controllable.client.input;
  */
 public enum InputLibrary
 {
-    GLFW, // Legacy value, uses SDL2
+    GLFW,
     SDL2 // Default
 }

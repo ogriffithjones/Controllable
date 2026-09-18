@@ -82,7 +82,7 @@ public class ButtonBindings
     public static final ButtonBinding CLOSE_INVENTORY = new ButtonBinding(Buttons.Y, "controllable.key.close_inventory", "key.category.minecraft.inventory", InScreenContext.INSTANCE, OnPressHandler.create(context -> {
         return Optional.of(() -> {
             context.screen().ifPresent(screen -> {
-                screen.keyPressed(new KeyEvent(InputConstants.KEY_ESCAPE, SDLKeyboard.SDL_GetKeyFromScancode(InputConstants.KEY_ESCAPE, (short) 0, false), 0));
+                screen.keyPressed(new KeyEvent(InputConstants.KEY_ESCAPE, SDLKeyboard.SDL_GetKeyFromScancode(InputConstants.KEY_ESCAPE, (short) 0, true), 0));
             });
         });
     }));

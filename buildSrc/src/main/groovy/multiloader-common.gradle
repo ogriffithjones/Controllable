@@ -30,7 +30,6 @@ def getPackagesRepo() {
 
 repositories {
     mavenCentral()
-    // Built from pinned, patched Framework sources by scripts/build-fabric.sh.
     exclusiveContent {
         forRepository {
             maven {
@@ -41,6 +40,7 @@ repositories {
         filter {
             includeModule('com.mrcrayfish', 'framework-common')
             includeModule('com.mrcrayfish', 'framework-fabric')
+            includeModule('com.mrcrayfish', 'framework-neoforge')
         }
     }
     exclusiveContent {

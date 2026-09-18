@@ -110,7 +110,6 @@ public class Controllable
     private static AdaptiveControllerManager createManager()
     {
         return switch (Config.CLIENT.inputLibrary.get()) {
-            // Accept old GLFW configurations using the supported SDL2 backend.
             case GLFW, SDL2 -> new SDL2ControllerManager();
         };
     }

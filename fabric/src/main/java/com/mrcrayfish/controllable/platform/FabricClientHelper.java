@@ -47,7 +47,7 @@ public class FabricClientHelper implements IClientHelper
     @Override
     public boolean sendScreenInput(Screen screen, int key, int action, int modifiers)
     {
-        KeyEvent event = new KeyEvent(key, SDLKeyboard.SDL_GetKeyFromScancode(key, (short) modifiers, false), modifiers);
+        KeyEvent event = new KeyEvent(key, SDLKeyboard.SDL_GetKeyFromScancode(key, (short) modifiers, true), modifiers);
         if(action == InputConstants.RELEASE)
         {
             if(!ScreenKeyboardEvents.allowKeyRelease(screen).invoker().allowKeyRelease(screen, event))

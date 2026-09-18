@@ -1,5 +1,6 @@
 package com.mrcrayfish.controllable.platform;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mrcrayfish.controllable.client.binding.context.NeoForgeKeyContext;
 import com.mrcrayfish.controllable.client.binding.context.BindingContext;
 import com.mrcrayfish.controllable.client.gui.navigation.BasicNavigationPoint;
@@ -33,7 +34,7 @@ import net.neoforged.neoforge.client.gui.CreativeTabsScreenPage;
 import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2f;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeyboard;
 
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,8 @@ public class NeoForgeClientHelper implements IClientHelper
     @Override
     public boolean sendScreenInput(Screen screen, int key, int action, int modifiers)
     {
-        KeyEvent event = new KeyEvent(key, GLFW.glfwGetKeyScancode(key), modifiers);
-        if(action == GLFW.GLFW_RELEASE)
+        KeyEvent event = new KeyEvent(key, SDLKeyboard.SDL_GetKeyFromScancode(key, (short) modifiers, true), modifiers);
+        if(action == InputConstants.RELEASE)
         {
             if(!ClientHooks.onScreenKeyReleasedPre(screen, event))
             {
@@ -60,7 +61,7 @@ public class NeoForgeClientHelper implements IClientHelper
             }
             return true;
         }
-        else if(action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT)
+        else if(action == InputConstants.PRESS || action == InputConstants.REPEAT)
         {
             screen.afterKeyboardAction();
             if(!ClientHooks.onScreenKeyPressedPre(screen, event))
@@ -120,7 +121,7 @@ public class NeoForgeClientHelper implements IClientHelper
     @Override
     public Slot getSlotUnderMouse(AbstractContainerScreen<?> screen)
     {
-        return screen.getSlotUnderMouse();
+        return screen.getHoveredSlot();
     }
 
     @Override
@@ -187,13 +188,13 @@ public class NeoForgeClientHelper implements IClientHelper
     @Override
     public int getScreenTop(AbstractContainerScreen<?> screen)
     {
-        return screen.getGuiTop();
+        return screen.getTopPos();
     }
 
     @Override
     public int getScreenLeft(AbstractContainerScreen<?> screen)
     {
-        return screen.getGuiLeft();
+        return screen.getLeftPos();
     }
 
     @Override
@@ -278,7 +279,7 @@ public class NeoForgeClientHelper implements IClientHelper
     @Override
     public void sendKeyInputEvent(int key, int scanCode, int action, int modifiers)
     {
-        ClientHooks.onKeyInput(new KeyEvent(key, scanCode, modifiers), action);
+        ClientHooks.onKeyInput(new KeyEvent(key, SDLKeyboard.SDL_GetKeyFromScancode(key, (short) modifiers, true), modifiers), action);
     }
 
     @Override
@@ -339,8 +340,8 @@ public class NeoForgeClientHelper implements IClientHelper
         int height = 32;
         int x = guiLeft + width * column;
         int y = guiTop;
-        x = tab.isAlignedRight() ? guiLeft + screen.getXSize() - width * (6 - column) : (column > 0 ? x + column : x);
-        y = topRow ? y - width : y + (screen.getYSize() - 4);
+        x = tab.isAlignedRight() ? guiLeft + screen.getImageWidth() - width * (6 - column) : (column > 0 ? x + column : x);
+        y = topRow ? y - width : y + (screen.getImageHeight() - 4);
         return new BasicNavigationPoint(x + width / 2.0, y + height / 2.0);
     }
 }
